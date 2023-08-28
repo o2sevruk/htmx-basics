@@ -5,25 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Basics</title>
   </head>
-  <body>
-    <div hx-ext="client-side-templates">
-      <button
-        hx-get="https://api.thecatapi.com/v1/images/search?limit=10"
-        hx-trigger="click"
-        hx-target="#target"
-        hx-swap="innerHTML"
-        mustache-template="template"
-      >
-        Load Cats!
-      </button>
-      <div id="target"></div>
-      <template id="template">
+  <body hx-ext="client-side-templates">
+    <button
+      hx-get="https://api.thecatapi.com/v1/images/search?limit=10"
+      hx-trigger="click"
+      hx-target="#cats"
+      hx-swap="innerHTML"
+      mustache-template="cats-item-template"
+    >
+      Load Cats!
+    </button>
+    <button
+      hx-get="https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=10"
+      hx-trigger="click"
+      hx-target="#cat-facts"
+      hx-swap="innerHTML"
+      mustache-template="cat-facts-item-template"
+    >
+      Load Cat Facts!
+    </button>
+    
+    <div id="cats"></div>
+    <div id="cat-facts"></div>
+
+    <!-- TEMPLATES -->
+    <template id="cats-item-template">
+      {{#.}}
+      <img width="200" src="{{url}}" alt="{{id}}" />
+      {{/.}}
+    </template>
+    <template id="cat-facts-item-template">
+      <ul>
         {{#.}}
-        <img width="200" src="{{url}}" alt="{{id}}" />
+        <li>{{text}}</li>
         {{/.}}
-      </template>
-    </div>
+      </ul>
+    </template>
+    <!-- /TEMPLATES -->
   </body>
+
   <script src="./node_modules/htmx.org/dist/htmx.min.js"></script>
   <script src="./node_modules/htmx.org/dist/ext/client-side-templates.js"></script>
   <script src="./node_modules/mustache/mustache.min.js"></script>
